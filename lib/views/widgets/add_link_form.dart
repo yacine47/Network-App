@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:network_app/constants.dart';
+import 'package:network_app/cubits/check_network/check_network_cubit.dart';
+import 'package:network_app/functions/get_urls.dart';
 import 'package:network_app/views/widgets/custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -38,8 +43,13 @@ class _AddLinkFormState extends State<AddLinkForm> {
             height: 28,
           ),
           CustomButton(
-              onTap: () {
+              onTap: () async {
                 if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  await addLinkToDataBase();
+
+                  Navigator.pop(context);
+                  BlocProvider.of<CheckNetworkCubit>(context).checkUrls();
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {});
@@ -52,5 +62,12 @@ class _AddLinkFormState extends State<AddLinkForm> {
         ],
       ),
     );
+  }
+
+  Future<void> addLinkToDataBase() async {
+    final box = Hive.box(kUrlsBox);
+    List<String> urls = getUrls();
+    urls.add(title!);
+    await box.put(kUrls, urls);
   }
 }

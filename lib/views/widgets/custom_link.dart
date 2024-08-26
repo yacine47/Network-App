@@ -1,17 +1,19 @@
-
 import 'package:flutter/material.dart';
 
 class CustomLink extends StatelessWidget {
   const CustomLink({
     super.key,
+    required this.url,
   });
+
+  final String url;
 
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      'https://www.google.com/fdsfsfsdsfsfsdfsdfsdffsdf',
+    return Text(
+      url,
       overflow: TextOverflow.ellipsis,
-      style: TextStyle(fontSize: 13),
+      style: const TextStyle(fontSize: 13),
     );
   }
 }
