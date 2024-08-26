@@ -58,7 +58,7 @@ class FetchDataUrls extends StatelessWidget {
   void deleteUrl(int index) {
     final box = Hive.box(kUrlsBox);
     List<String> urls = getUrls();
-
-    box.put(kUrls, urls.removeAt(index));
+    urls.removeAt(index);
+    box.put(kUrls, urls);
   }
 }
