@@ -31,7 +31,7 @@ class FetchDataUrls extends StatelessWidget {
               rowWget:
                   CustomStatusPoint(isConnect: state.urls[index].isWgetConnect),
               rowDelete: CustomButtonDelete(
-                onPressed: () {
+                onPressed: () async {
                   deleteUrl(index);
                   BlocProvider.of<CheckNetworkCubit>(context).checkUrls();
                 },
@@ -55,10 +55,10 @@ class FetchDataUrls extends StatelessWidget {
     );
   }
 
-  void deleteUrl(int index) {
+  void deleteUrl(int index) async {
     final box = Hive.box(kUrlsBox);
     List<String> urls = getUrls();
     urls.removeAt(index);
-    box.put(kUrls, urls);
+    await box.put(kUrls, urls);
   }
 }
