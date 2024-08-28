@@ -74,7 +74,7 @@ class NetworkRepoImpl extends NetworkRepo {
 
         await box.putAt(i, model);
       }
-      return networks;
+      return box.values.toList();
     } catch (e) {
       print('Error checking URLs: $e');
       return [];

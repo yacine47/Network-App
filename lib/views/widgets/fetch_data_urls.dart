@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
 import 'package:network_app/cubits/check_network/check_network_cubit.dart';
-import 'package:network_app/functions/get_urls.dart';
 import 'package:network_app/models/network_model.dart';
 import 'package:network_app/views/widgets/custom_button_delete.dart';
 import 'package:network_app/views/widgets/custom_link.dart';
@@ -26,14 +25,14 @@ class FetchDataUrls extends StatelessWidget {
             itemCount: state.urls.length,
             separatorBuilder: (context, index) => const Divider(height: 0),
             itemBuilder: (context, index) => CustomRowTable(
-              rowName: CustomLink(url: state.urls[index].url),
+              rowName: CustomLink(url: state.urls[index].name),
               rowPing:
                   CustomStatusPoint(isConnect: state.urls[index].isPingConnect),
               rowWget:
                   CustomStatusPoint(isConnect: state.urls[index].isWgetConnect),
               rowDelete: CustomButtonDelete(
                 onPressed: () async {
-                  deleteUrl(index);
+                  await deleteUrl(index);
                   BlocProvider.of<CheckNetworkCubit>(context).checkUrls();
                 },
               ),
@@ -56,8 +55,8 @@ class FetchDataUrls extends StatelessWidget {
     );
   }
 
-  void deleteUrl(int index) async {
+  Future<void> deleteUrl(int index) async {
     final box = Hive.box<NetworkModel>(kNetworkBox);
-    box.deleteAt(index);
+    await box.deleteAt(index);
   }
 }

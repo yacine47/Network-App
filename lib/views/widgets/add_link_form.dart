@@ -57,9 +57,8 @@ class _AddLinkFormState extends State<AddLinkForm> {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
                   await addLinkToDataBase();
-
-                  Navigator.pop(context);
                   BlocProvider.of<CheckNetworkCubit>(context).checkUrls();
+                  Navigator.pop(context);
                 } else {
                   autovalidateMode = AutovalidateMode.always;
                   setState(() {});
@@ -78,7 +77,7 @@ class _AddLinkFormState extends State<AddLinkForm> {
     final box = Hive.box<NetworkModel>(kNetworkBox);
     // List<String> urls = getUrls();
 
-    box.add(NetworkModel(
+    await box.add(NetworkModel(
       url: url!,
       name: name!,
       isPingConnect: false,
@@ -86,7 +85,5 @@ class _AddLinkFormState extends State<AddLinkForm> {
       lastChecked: DateTime.now(),
       refreshInterval: 60,
     ));
-
-    print(box.values.toList());
   }
 }
