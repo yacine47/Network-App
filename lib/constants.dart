@@ -5,4 +5,5 @@ const kBackgroundColor = Color(0xfffafcff);
 const kUrlsBox = 'kUrlsBox';
 const kUrls = 'kUrls';
 const kNetworkBox = 'kNetworkBox';
+const kChartDataBox = 'kChartDataBox';
 const kRefreshIntervalKey  = 'kRefreshIntervalKey ';

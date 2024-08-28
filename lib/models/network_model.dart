@@ -1,6 +1,8 @@
-import 'dart:async';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:hive/hive.dart';
+
+import 'package:network_app/models/chart_data_model.dart';
 
 part 'network_model.g.dart';
 
@@ -19,20 +21,17 @@ class NetworkModel extends HiveObject {
   bool isWgetConnect;
 
   @HiveField(4)
-  DateTime lastChecked;
+  List<ChartDataModel> chartDataPings;
 
   @HiveField(5)
-  int refreshInterval; // Interval in seconds
-
-  @HiveField(6)
-  Timer? timeRefresh;
+  List<ChartDataModel> chartDataWgets;
 
   NetworkModel({
     required this.url,
     required this.name,
     required this.isPingConnect,
     required this.isWgetConnect,
-    required this.lastChecked,
-    required this.refreshInterval,
+    required this.chartDataPings,
+    required this.chartDataWgets,
   });
 }

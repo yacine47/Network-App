@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
+import 'package:network_app/models/chart_data_model.dart';
 import 'package:network_app/models/network_model.dart';
 import 'package:network_app/repos/network_repo.dart';
 import 'package:path_provider/path_provider.dart';
@@ -62,14 +63,19 @@ class NetworkRepoImpl extends NetworkRepo {
       for (int i = 0; i < networks.length; i++) {
         bool isWgetConnect = await checkWget(networks[i].url);
         bool isPingConnect = await checkPing(networks[i].url);
-
+        networks[i]
+            .chartDataPings
+            .add(ChartDataModel(DateTime.now(), isPingConnect == true ? 1 : 0));
+        networks[i]
+            .chartDataWgets
+            .add(ChartDataModel(DateTime.now(), isWgetConnect == true ? 1 : 0));
         final model = NetworkModel(
           url: networks[i].url,
           name: networks[i].name,
           isPingConnect: isPingConnect,
           isWgetConnect: isWgetConnect,
-          lastChecked: DateTime.now(),
-          refreshInterval: 60,
+          chartDataPings: networks[i].chartDataPings,
+          chartDataWgets: networks[i].chartDataWgets,
         );
 
         await box.putAt(i, model);

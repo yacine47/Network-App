@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
 import 'package:network_app/cubits/check_network/check_network_cubit.dart';
 import 'package:network_app/models/network_model.dart';
+import 'package:network_app/views/network_details_view.dart';
 import 'package:network_app/views/widgets/custom_button_delete.dart';
 import 'package:network_app/views/widgets/custom_link.dart';
 import 'package:network_app/views/widgets/custom_row_table.dart';
@@ -22,14 +23,21 @@ class FetchDataUrls extends StatelessWidget {
           return ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: state.urls.length,
+            itemCount: state.networks.length,
             separatorBuilder: (context, index) => const Divider(height: 0),
             itemBuilder: (context, index) => CustomRowTable(
-              rowName: CustomLink(url: state.urls[index].name),
-              rowPing:
-                  CustomStatusPoint(isConnect: state.urls[index].isPingConnect),
-              rowWget:
-                  CustomStatusPoint(isConnect: state.urls[index].isWgetConnect),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => NetworkDetailsView(
+                            networkModel: state.networks[index])));
+              },
+              rowName: CustomLink(url: state.networks[index].name),
+              rowPing: CustomStatusPoint(
+                  isConnect: state.networks[index].isPingConnect),
+              rowWget: CustomStatusPoint(
+                  isConnect: state.networks[index].isWgetConnect),
               rowDelete: CustomButtonDelete(
                 onPressed: () async {
                   await deleteUrl(index);

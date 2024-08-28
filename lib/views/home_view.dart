@@ -11,7 +11,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Network App'),
-        centerTitle: true,
+        
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

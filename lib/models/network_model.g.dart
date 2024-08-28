@@ -21,15 +21,15 @@ class NetworkModelAdapter extends TypeAdapter<NetworkModel> {
       name: fields[1] as String,
       isPingConnect: fields[2] as bool,
       isWgetConnect: fields[3] as bool,
-      lastChecked: fields[4] as DateTime,
-      refreshInterval: fields[5] as int,
-    )..timeRefresh = fields[6] as Timer?;
+      chartDataPings: (fields[4] as List).cast<ChartDataModel>(),
+      chartDataWgets: (fields[5] as List).cast<ChartDataModel>(),
+    );
   }
 
   @override
   void write(BinaryWriter writer, NetworkModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.url)
       ..writeByte(1)
@@ -39,11 +39,9 @@ class NetworkModelAdapter extends TypeAdapter<NetworkModel> {
       ..writeByte(3)
       ..write(obj.isWgetConnect)
       ..writeByte(4)
-      ..write(obj.lastChecked)
+      ..write(obj.chartDataPings)
       ..writeByte(5)
-      ..write(obj.refreshInterval)
-      ..writeByte(6)
-      ..write(obj.timeRefresh);
+      ..write(obj.chartDataWgets);
   }
 
   @override

@@ -8,9 +8,9 @@ class CheckNetworkInitial extends CheckNetworkState {}
 class CheckNetworkLoading extends CheckNetworkState {}
 
 class CheckNetworkSuccess extends CheckNetworkState {
-  final List<NetworkModel> urls;
+  final List<NetworkModel> networks;
 
-  CheckNetworkSuccess(this.urls);
+  CheckNetworkSuccess(this.networks);
 }
 
 class CheckNetworkFailure extends CheckNetworkState {
