@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
 import 'package:network_app/cubits/check_network/check_network_cubit.dart';
 import 'package:network_app/functions/get_urls.dart';
+import 'package:network_app/models/network_model.dart';
 import 'package:network_app/views/widgets/custom_button.dart';
 import 'custom_text_field.dart';
 
@@ -21,7 +22,7 @@ class _AddLinkFormState extends State<AddLinkForm> {
 
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
-  String? title, subTitle;
+  String? url, name;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +35,18 @@ class _AddLinkFormState extends State<AddLinkForm> {
             height: 32,
           ),
           CustomTextField(
+            hint: 'Name Site',
+            onSaved: (value) {
+              name = value;
+            },
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          CustomTextField(
             hint: 'Link Site',
             onSaved: (value) {
-              title = value;
+              url = value;
             },
           ),
           const SizedBox(
@@ -65,9 +75,18 @@ class _AddLinkFormState extends State<AddLinkForm> {
   }
 
   Future<void> addLinkToDataBase() async {
-    final box = Hive.box(kUrlsBox);
-    List<String> urls = getUrls();
-    urls.add(title!);
-    await box.put(kUrls, urls);
+    final box = Hive.box<NetworkModel>(kNetworkBox);
+    // List<String> urls = getUrls();
+
+    box.add(NetworkModel(
+      url: url!,
+      name: name!,
+      isPingConnect: false,
+      isWgetConnect: false,
+      lastChecked: DateTime.now(),
+      refreshInterval: 60,
+    ));
+
+    print(box.values.toList());
   }
 }

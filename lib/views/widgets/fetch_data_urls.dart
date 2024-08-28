@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
 import 'package:network_app/cubits/check_network/check_network_cubit.dart';
 import 'package:network_app/functions/get_urls.dart';
+import 'package:network_app/models/network_model.dart';
 import 'package:network_app/views/widgets/custom_button_delete.dart';
 import 'package:network_app/views/widgets/custom_link.dart';
 import 'package:network_app/views/widgets/custom_row_table.dart';
@@ -56,9 +57,7 @@ class FetchDataUrls extends StatelessWidget {
   }
 
   void deleteUrl(int index) async {
-    final box = Hive.box(kUrlsBox);
-    List<String> urls = getUrls();
-    urls.removeAt(index);
-    await box.put(kUrls, urls);
+    final box = Hive.box<NetworkModel>(kNetworkBox);
+    box.deleteAt(index);
   }
 }

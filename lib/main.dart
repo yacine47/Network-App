@@ -3,14 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:network_app/constants.dart';
 import 'package:network_app/cubits/check_network/check_network_cubit.dart';
+import 'package:network_app/models/network_model.dart';
 
 import 'package:network_app/repos/network_repo_impl.dart';
 import 'package:network_app/views/home_view.dart';
 
 void main() async {
   await Hive.initFlutter();
+  Hive.registerAdapter(NetworkModelAdapter());
+  await Hive.openBox<NetworkModel>(kNetworkBox);
+  await Hive.openBox(kRefreshIntervalKey);
   await Hive.openBox(kUrlsBox);
-  
+
   runApp(const NetworkApp());
 }
 

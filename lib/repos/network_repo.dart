@@ -5,5 +5,5 @@ abstract class NetworkRepo {
 
   Future<bool> checkWget(String url);
 
-  Future<List<NetworkModel>> checkUrls(List<String> urls);
+  Future<List<NetworkModel>> checkUrls();
 }
