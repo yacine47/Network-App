@@ -37,13 +37,15 @@ class NetworkApp extends StatelessWidget {
         title: 'Network App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          
           scaffoldBackgroundColor: kBackgroundColor,
           bottomSheetTheme:
               const BottomSheetThemeData(backgroundColor: Colors.white),
           appBarTheme: const AppBarTheme(
-              centerTitle: true,
-              color: kPrimaryColor,
-              foregroundColor: Colors.white),
+            centerTitle: true,
+            color: kPrimaryColor,
+            foregroundColor: Colors.white,
+          ),
           useMaterial3: true,
         ),
         home: const HomeView(),
